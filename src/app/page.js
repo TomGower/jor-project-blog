@@ -1,7 +1,6 @@
 import React from 'react';
 
 import BlogSummaryCard from '@/components/BlogSummaryCard';
-import fs from 'fs/promises';
 
 import styles from './homepage.module.css';
 import { getBlogPostList } from '@/helpers/file-helpers';
