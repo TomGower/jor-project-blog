@@ -4,7 +4,8 @@ import path from 'path';
 import matter from 'gray-matter';
 
 export async function getBlogPostList() {
-  const fileNames = await readDirectory('/content');
+  const fileNames = await readDirectory('./content');
+  console.log('fileNames is', fileNames);
 
   const blogPosts = [];
 
