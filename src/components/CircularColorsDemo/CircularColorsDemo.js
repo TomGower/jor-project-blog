@@ -39,15 +39,12 @@ function CircularColorsDemo() {
   }, [playStatus]);
 
   function pauseAnimation() {
-    console.log('clicked to pause');
     setPlayStatus('pause');
   }
   function playAnimation() {
-    console.log('clicked to play');
     setPlayStatus('play');
   }
   function resetAnimation() {
-    setPlayStatus('stop');
     setTimeElapsed(0);
   }
 
