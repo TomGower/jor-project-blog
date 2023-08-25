@@ -2,10 +2,10 @@ import React from 'react';
 import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
+import { existsSync } from 'fs';
 
 export async function getBlogPostList() {
   const fileNames = await readDirectory('./content');
-  console.log('fileNames is', fileNames);
 
   const blogPosts = [];
 
@@ -26,13 +26,18 @@ export async function getBlogPostList() {
 export const loadBlogPost = React.cache(async function (slug) {
   const rawContent = await readFile(`/content/${slug}.mdx`);
 
+  if (!rawContent) return rawContent;
+
   const { data: frontmatter, content } = matter(rawContent);
 
   return { frontmatter, content };
 });
 
 function readFile(localPath) {
-  return fs.readFile(path.join(process.cwd(), localPath), 'utf8');
+  const filePath = path.join(process.cwd(), localPath);
+  if (!existsSync(filePath)) return undefined;
+
+  return fs.readFile(filePath);
 }
 
 function readDirectory(localPath) {

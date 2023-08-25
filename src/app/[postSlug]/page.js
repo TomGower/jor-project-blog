@@ -1,4 +1,5 @@
 import React from 'react';
+import { notFound } from 'next/navigation';
 
 import BlogHero from '@/components/BlogHero';
 
@@ -18,6 +19,9 @@ const CircularColorsDemo = dynamic(() =>
 
 export async function generateMetadata({ params }) {
   const post = await loadBlogPost(params.postSlug);
+
+  if (!post) return {};
+
   const { frontmatter } = post;
 
   return {
@@ -28,6 +32,10 @@ export async function generateMetadata({ params }) {
 
 async function BlogPost({ params }) {
   const post = await loadBlogPost(params.postSlug);
+
+  if (!post) {
+    notFound();
+  }
 
   return (
     <article className={styles.wrapper}>
