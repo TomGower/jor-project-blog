@@ -24,6 +24,24 @@ export async function getBlogPostList() {
 }
 
 export const loadBlogPost = React.cache(async function (slug) {
+  // this apparently worked for Josh, without adding the existsSync check in readFile()
+  // I think for me, I tried putting the try/catch in here, rather than in readFile()
+
+  /*
+    let rawContent;
+
+    // Wrapping this operation in a try/catch so that it stops
+    // throwing an error if the file can't be found. Instead,
+    // we'll return `null`, and the caller can figure out how
+    // to handle this situation.
+    try {
+      rawContent = await readFile(
+        `/content/${slug}.mdx`
+      );
+    } catch (err) {
+      return null;
+    }
+  */
   const rawContent = await readFile(`/content/${slug}.mdx`);
 
   if (!rawContent) return rawContent;

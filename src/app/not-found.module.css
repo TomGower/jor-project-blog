@@ -1,3 +1,5 @@
+/*
+CSS I just imported from main styles.css used on homepage
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -6,4 +8,14 @@
   max-width: var(--content-width);
   padding: 64px var(--viewport-padding);
   margin: 0 auto;
+} */
+
+/* Josh's CSS for this page */
+.wrapper {
+  padding-top: 96px;
+  text-align: center;
+}
+
+.wrapper h1 {
+  margin-bottom: 1em;
 }

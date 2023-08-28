@@ -1,5 +1,10 @@
 import Link from 'next/link';
 import styles from './not-found.module.css';
+import { BLOG_TITLE } from '@/constants';
+
+export const metadata = {
+  title: `404 Not found • ${BLOG_TITLE}`,
+};
 
 export default async function NotFound() {
   return (
