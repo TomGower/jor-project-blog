@@ -24,6 +24,7 @@ function Header({ theme, className, ...delegated }) {
           />
           <VisuallyHidden>View RSS feed</VisuallyHidden>
         </button>
+        {/* Josh does this in Header instead of as a separate component. I dunno, I kind of like the universal specific solution idea */}
         <DarkLightToggle initialTheme={theme} />
       </div>
     </header>

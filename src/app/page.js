@@ -13,6 +13,7 @@ async function Home() {
       <h1 className={styles.mainHeading}>Latest Content:</h1>
 
       {/* TODO: Iterate over the data read from the file system! */}
+      {/* could use destructuring and { slug, ...delegated } and pass in {...delegated} to component call. Josh doesn't like that in JS because of illegibility, and I don't either. if TS will confirm that these are both the same things and throw us an error when they're not, that's safer. */}
       {posts.map((p) => (
         <BlogSummaryCard
           slug={p.slug}

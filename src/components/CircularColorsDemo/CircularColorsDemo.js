@@ -2,6 +2,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Play, Pause, RotateCcw } from 'react-feather';
+import { motion } from 'framer-motion';
 
 import Card from '@/components/Card';
 import VisuallyHidden from '@/components/VisuallyHidden';
@@ -22,20 +23,21 @@ function CircularColorsDemo() {
   // TODO: This value should cycle through the colors in the
   // COLORS array:
   // const selectedColor = COLORS[0];
-  const selectedColor = COLORS[timeElapsed % 3];
-  const [playStatus, setPlayStatus] = React.useState('play');
+  const selectedColor = COLORS[timeElapsed % COLORS.length]; // make this fully dependent on colors
+  const [playStatus, setPlayStatus] = React.useState('idle'); // do not have it start playing
 
   React.useEffect(() => {
-    if (playStatus === 'play') {
-      function updateTime() {
-        setTimeElapsed((s) => s + 1);
-      }
-      const timerId = setInterval(updateTime, 1000);
+    // better to use early return instead of setting it in conditional
+    if (playStatus !== 'play') return;
 
-      return () => {
-        clearInterval(timerId);
-      };
+    function updateTime() {
+      setTimeElapsed((s) => s + 1);
     }
+    const timerId = window.setInterval(updateTime, 1000); // call on window specifically
+
+    return () => {
+      window.clearInterval(timerId);
+    };
   }, [playStatus]);
 
   function pauseAnimation() {
@@ -56,7 +58,12 @@ function CircularColorsDemo() {
 
           return (
             <li className={styles.color} key={index}>
-              {isSelected && <div className={styles.selectedColorOutline} />}
+              {isSelected && (
+                <motion.div
+                  layoutId={`${id}-selected-color-outline`}
+                  className={styles.selectedColorOutline}
+                />
+              )}
               <div
                 className={clsx(
                   styles.colorBox,
@@ -79,7 +86,7 @@ function CircularColorsDemo() {
           <dd>{timeElapsed}</dd>
         </dl>
         <div className={styles.actions}>
-          {playStatus === 'play' ? (
+          {/* {playStatus === 'play' ? (
             <button onClick={pauseAnimation}>
               <Pause />
               <VisuallyHidden>Pause</VisuallyHidden>
@@ -89,7 +96,23 @@ function CircularColorsDemo() {
               <Play />
               <VisuallyHidden>Play</VisuallyHidden>
             </button>
-          )}
+          )} */}
+          {/* Josh's preferred solution is to use conditional rendering inside buttons */}
+          <button
+            onClick={() => {
+              if (playStatus === 'play') {
+                setStatus('idle');
+              } else {
+                setStatus('play');
+                setTimeElapsed(timeElapsed + 1);
+              }
+            }}
+          >
+            {playStatus === 'play' ? <Pause /> : <Play />}
+            <VisuallyHidden>
+              {playStatus === 'play' ? 'Pause' : 'Play'}
+            </VisuallyHidden>
+          </button>
           <button onClick={resetAnimation}>
             <RotateCcw />
             <VisuallyHidden>Reset</VisuallyHidden>
